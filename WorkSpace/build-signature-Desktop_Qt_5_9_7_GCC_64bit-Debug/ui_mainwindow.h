@@ -16,6 +16,7 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
@@ -26,6 +27,8 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
+    QPushButton *expimgButton;
+    QPushButton *clearButton;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -37,6 +40,12 @@ public:
         MainWindow->resize(860, 500);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
+        expimgButton = new QPushButton(centralWidget);
+        expimgButton->setObjectName(QStringLiteral("expimgButton"));
+        expimgButton->setGeometry(QRect(280, 300, 91, 31));
+        clearButton = new QPushButton(centralWidget);
+        clearButton->setObjectName(QStringLiteral("clearButton"));
+        clearButton->setGeometry(QRect(430, 300, 91, 31));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -57,6 +66,8 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
+        expimgButton->setText(QApplication::translate("MainWindow", "ExpImg", Q_NULLPTR));
+        clearButton->setText(QApplication::translate("MainWindow", "Clear", Q_NULLPTR));
     } // retranslateUi
 
 };
