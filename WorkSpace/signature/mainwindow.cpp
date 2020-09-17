@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "QPainter"
+#include <QPainter>
 #include <QSize>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -10,7 +10,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     resize(900, 500);    //窗口大小设置为600*500
-
+    pix = QPixmap(900,200);
+    pix.fill(Qt::white);
     press = false;
     /*
 	button = new QPushButton(this);
@@ -28,6 +29,19 @@ MainWindow::~MainWindow()
 
 void MainWindow::paintEvent(QPaintEvent *)
 {
+
+	QPainter pp(&pix);
+	pp.drawLine(lastPoint, endPoint);
+	lastPoint = endPoint;
+	QPainter painter(this);
+	painter.drawPixmap(0,0,pix);
+	int i = 0;
+	while(point_list.size()!=0 && i !=point_list.size())
+	{
+		painter.drawPoint(point_list.at(i));
+		i++;
+	}
+	/*
 	QPainter painter(this);
 	QPen mypen;
     mypen.setWidth(7);
@@ -56,19 +70,16 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 	
 	if(event->button() == Qt::LeftButton)
 	{
-		this->press = true;
+		lastPoint = event->pos();
 	}
 }
 void MainWindow::mouseMoveEvent(QMouseEvent *event)
 {
-	if(event->buttons()&Qt::LeftButton)
+	if(event->buttons() && Qt::LeftButton)
 	{
-		if(this->press)
-		{
-		    point = event->pos();
-	        point_list.append(point);
-			update();	
-		}
+		endPoint = event->pos();
+		point_list.append(endPoint);
+		update();	
 	}
 }
 void MainWindow::mouseReleaseEvent(QMouseEvent *event)
@@ -76,9 +87,10 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 	if(event->button() == Qt::LeftButton)
 	{
 
-		this->press = false;
+		endPoint = event->pos();
+		update();
 	
-}
+	}
 }
 
 void MainWindow::on_clearButton_clicked()

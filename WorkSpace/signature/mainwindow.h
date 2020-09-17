@@ -31,10 +31,11 @@ private slots:
 
 private:
 	QPoint point;
-	/*
+
+	QPixmap pix;
 	QPoint lastPoint;
 	QPoint endPoint;
-	*/
+	
 	QList<QPoint> point_list;
 
 	bool press;
