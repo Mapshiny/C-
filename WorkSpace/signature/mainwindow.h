@@ -29,6 +29,10 @@ private slots:
 
     void on_expimgButton_clicked();
 
+    void on_pointXYButton_clicked();
+
+    void on_openImgButton_clicked();
+
 private:
 	QPoint point;
 

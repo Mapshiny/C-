@@ -51,9 +51,11 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../signature/main.cpp \
-		../signature/mainwindow.cpp moc_mainwindow.cpp
+		../signature/mainwindow.cpp \
+		../signature/comp_main.cpp moc_mainwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
+		comp_main.o \
 		moc_mainwindow.o
 DIST          = /opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/common/unix.conf \
@@ -216,6 +218,7 @@ DIST          = /opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/features/qt_config.prf \
 		/opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/linux-g++/qmake.conf \
 		/opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/features/spec_post.prf \
+		../signature/.qmake.stash \
 		/opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/features/exclusive_builds.prf \
 		/opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/features/toolchain.prf \
 		/opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/features/default_pre.prf \
@@ -235,8 +238,11 @@ DIST          = /opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/features/exceptions.prf \
 		/opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/features/yacc.prf \
 		/opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/features/lex.prf \
-		../signature/signature.pro ../signature/mainwindow.h ../signature/main.cpp \
-		../signature/mainwindow.cpp
+		../signature/signature.pro ../signature/mainwindow.h \
+		../signature/bmpheader.h \
+		../signature/compressheader.h ../signature/main.cpp \
+		../signature/mainwindow.cpp \
+		../signature/comp_main.cpp
 QMAKE_TARGET  = signature
 DESTDIR       = 
 TARGET        = signature
@@ -245,7 +251,7 @@ TARGET        = signature
 first: all
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h $(OBJECTS)  
+$(TARGET): ui_mainwindow.h ui_dialog.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../signature/signature.pro /opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/linux-g++/qmake.conf /opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/features/spec_pre.prf \
@@ -409,6 +415,7 @@ Makefile: ../signature/signature.pro /opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/linux-g++
 		/opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/features/qt_config.prf \
 		/opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/linux-g++/qmake.conf \
 		/opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/features/exclusive_builds.prf \
 		/opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/features/toolchain.prf \
 		/opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/features/default_pre.prf \
@@ -594,6 +601,7 @@ Makefile: ../signature/signature.pro /opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/linux-g++
 /opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/features/qt_config.prf:
 /opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/linux-g++/qmake.conf:
 /opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/features/exclusive_builds.prf:
 /opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/features/toolchain.prf:
 /opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/features/default_pre.prf:
@@ -632,9 +640,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../signature/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../signature/main.cpp ../signature/mainwindow.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../signature/mainwindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../signature/mainwindow.h ../signature/bmpheader.h ../signature/compressheader.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../signature/main.cpp ../signature/mainwindow.cpp ../signature/comp_main.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../signature/mainwindow.ui ../signature/dialog.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -772,6 +780,11 @@ moc_mainwindow.cpp: /opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/QMainWindow \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtGui/qtouchdevice.h \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qtabwidget.h \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtGui/qicon.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtGui/QMouseEvent \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/QDebug \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/QPushButton \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qpushbutton.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qabstractbutton.h \
 		../signature/mainwindow.h \
 		moc_predefs.h \
 		/opt/Qt5.9.7/5.9.7/gcc_64/bin/moc
@@ -779,12 +792,16 @@ moc_mainwindow.cpp: /opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/QMainWindow \
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h
+compiler_uic_make_all: ui_mainwindow.h ui_dialog.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h
+	-$(DEL_FILE) ui_mainwindow.h ui_dialog.h
 ui_mainwindow.h: ../signature/mainwindow.ui \
 		/opt/Qt5.9.7/5.9.7/gcc_64/bin/uic
 	/opt/Qt5.9.7/5.9.7/gcc_64/bin/uic ../signature/mainwindow.ui -o ui_mainwindow.h
+
+ui_dialog.h: ../signature/dialog.ui \
+		/opt/Qt5.9.7/5.9.7/gcc_64/bin/uic
+	/opt/Qt5.9.7/5.9.7/gcc_64/bin/uic ../signature/dialog.ui -o ui_dialog.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -900,6 +917,11 @@ main.o: ../signature/main.cpp ../signature/mainwindow.h \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtGui/qtouchdevice.h \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qtabwidget.h \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtGui/qicon.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtGui/QMouseEvent \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/QDebug \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/QPushButton \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qpushbutton.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qabstractbutton.h \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/QApplication \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qapplication.h \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qcoreapplication.h \
@@ -1013,12 +1035,124 @@ mainwindow.o: ../signature/mainwindow.cpp ../signature/mainwindow.h \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtGui/qtouchdevice.h \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qtabwidget.h \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtGui/qicon.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtGui/QMouseEvent \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/QDebug \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/QPushButton \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qpushbutton.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qabstractbutton.h \
 		ui_mainwindow.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/QVariant \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/QAction \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qaction.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qactiongroup.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/QApplication \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qapplication.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qcoreapplication.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qeventloop.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtGui/qguiapplication.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtGui/qinputmethod.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/QButtonGroup \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qbuttongroup.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/QHeaderView \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qheaderview.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qabstractitemview.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qframe.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qabstractitemmodel.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qitemselectionmodel.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qstyleoption.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtGui/qvalidator.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qregularexpression.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qslider.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qabstractslider.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qstyle.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qtabbar.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qrubberband.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/QMenuBar \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qmenubar.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qmenu.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/QStatusBar \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qstatusbar.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/QToolBar \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qtoolbar.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/QWidget \
+		../signature/compressheader.h \
+		../signature/bmpheader.h \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtGui/QPainter \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtGui/qpainter.h \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtGui/qtextoption.h \
-		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtGui/qpen.h
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtGui/qpen.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/QSize \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/QTime \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qdatetime.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../signature/mainwindow.cpp
+
+comp_main.o: ../signature/comp_main.cpp ../signature/compressheader.h \
+		../signature/bmpheader.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qdebug.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qtcore-config.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qversiontagging.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qhashfunctions.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qmap.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qtextstream.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qvariant.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qset.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qsharedpointer_impl.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o comp_main.o ../signature/comp_main.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
