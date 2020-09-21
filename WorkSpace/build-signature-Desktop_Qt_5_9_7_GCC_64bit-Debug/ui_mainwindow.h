@@ -18,7 +18,6 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -29,8 +28,9 @@ public:
     QWidget *centralWidget;
     QPushButton *expimgButton;
     QPushButton *clearButton;
+    QPushButton *pointXYButton;
+    QPushButton *openImgButton;
     QMenuBar *menuBar;
-    QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -42,18 +42,21 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         expimgButton = new QPushButton(centralWidget);
         expimgButton->setObjectName(QStringLiteral("expimgButton"));
-        expimgButton->setGeometry(QRect(280, 300, 91, 31));
+        expimgButton->setGeometry(QRect(70, 300, 91, 31));
         clearButton = new QPushButton(centralWidget);
         clearButton->setObjectName(QStringLiteral("clearButton"));
-        clearButton->setGeometry(QRect(430, 300, 91, 31));
+        clearButton->setGeometry(QRect(240, 300, 91, 31));
+        pointXYButton = new QPushButton(centralWidget);
+        pointXYButton->setObjectName(QStringLiteral("pointXYButton"));
+        pointXYButton->setGeometry(QRect(410, 300, 91, 31));
+        openImgButton = new QPushButton(centralWidget);
+        openImgButton->setObjectName(QStringLiteral("openImgButton"));
+        openImgButton->setGeometry(QRect(570, 300, 91, 31));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 860, 22));
         MainWindow->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(MainWindow);
-        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         MainWindow->setStatusBar(statusBar);
@@ -68,6 +71,8 @@ public:
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
         expimgButton->setText(QApplication::translate("MainWindow", "ExpImg", Q_NULLPTR));
         clearButton->setText(QApplication::translate("MainWindow", "Clear", Q_NULLPTR));
+        pointXYButton->setText(QApplication::translate("MainWindow", "PointXY", Q_NULLPTR));
+        openImgButton->setText(QApplication::translate("MainWindow", "OpenImg", Q_NULLPTR));
     } // retranslateUi
 
 };
