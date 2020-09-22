@@ -35,8 +35,7 @@ HEADERS += \
         compressheader.h
 
 FORMS += \
-    mainwindow.ui \
-    dialog.ui
+    mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

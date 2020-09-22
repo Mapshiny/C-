@@ -251,7 +251,7 @@ TARGET        = signature
 first: all
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h ui_dialog.h $(OBJECTS)  
+$(TARGET): ui_mainwindow.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../signature/signature.pro /opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/linux-g++/qmake.conf /opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/features/spec_pre.prf \
@@ -642,7 +642,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents /opt/Qt5.9.7/5.9.7/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../signature/mainwindow.h ../signature/bmpheader.h ../signature/compressheader.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../signature/main.cpp ../signature/mainwindow.cpp ../signature/comp_main.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../signature/mainwindow.ui ../signature/dialog.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../signature/mainwindow.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -792,16 +792,12 @@ moc_mainwindow.cpp: /opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/QMainWindow \
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h ui_dialog.h
+compiler_uic_make_all: ui_mainwindow.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h ui_dialog.h
+	-$(DEL_FILE) ui_mainwindow.h
 ui_mainwindow.h: ../signature/mainwindow.ui \
 		/opt/Qt5.9.7/5.9.7/gcc_64/bin/uic
 	/opt/Qt5.9.7/5.9.7/gcc_64/bin/uic ../signature/mainwindow.ui -o ui_mainwindow.h
-
-ui_dialog.h: ../signature/dialog.ui \
-		/opt/Qt5.9.7/5.9.7/gcc_64/bin/uic
-	/opt/Qt5.9.7/5.9.7/gcc_64/bin/uic ../signature/dialog.ui -o ui_dialog.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -1076,8 +1072,6 @@ mainwindow.o: ../signature/mainwindow.cpp ../signature/mainwindow.h \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qmenu.h \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/QStatusBar \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qstatusbar.h \
-		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/QToolBar \
-		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qtoolbar.h \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/QWidget \
 		../signature/compressheader.h \
 		../signature/bmpheader.h \
@@ -1087,7 +1081,12 @@ mainwindow.o: ../signature/mainwindow.cpp ../signature/mainwindow.h \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtGui/qpen.h \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/QSize \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/QTime \
-		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qdatetime.h
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qdatetime.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/QFileDialog \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qfiledialog.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qdir.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtCore/qfileinfo.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qdialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../signature/mainwindow.cpp
 
 comp_main.o: ../signature/comp_main.cpp ../signature/compressheader.h \

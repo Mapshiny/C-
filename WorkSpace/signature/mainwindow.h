@@ -26,12 +26,11 @@ protected:
 
 private slots:
     void on_clearButton_clicked();
-
     void on_expimgButton_clicked();
-
     void on_pointXYButton_clicked();
-
     void on_openImgButton_clicked();
+
+    void on_saveButton_clicked();
 
 private:
 	QPoint point;
@@ -42,7 +41,6 @@ private:
 	
 	QList<QPoint> point_list;
 
-	bool press;
 
 
     Ui::MainWindow *ui;

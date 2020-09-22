@@ -14,6 +14,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
@@ -30,6 +31,8 @@ public:
     QPushButton *clearButton;
     QPushButton *pointXYButton;
     QPushButton *openImgButton;
+    QLabel *label;
+    QPushButton *saveButton;
     QMenuBar *menuBar;
     QStatusBar *statusBar;
 
@@ -37,25 +40,31 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(860, 500);
+        MainWindow->resize(899, 532);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         expimgButton = new QPushButton(centralWidget);
         expimgButton->setObjectName(QStringLiteral("expimgButton"));
-        expimgButton->setGeometry(QRect(70, 300, 91, 31));
+        expimgButton->setGeometry(QRect(80, 210, 91, 31));
         clearButton = new QPushButton(centralWidget);
         clearButton->setObjectName(QStringLiteral("clearButton"));
-        clearButton->setGeometry(QRect(240, 300, 91, 31));
+        clearButton->setGeometry(QRect(280, 210, 91, 31));
         pointXYButton = new QPushButton(centralWidget);
         pointXYButton->setObjectName(QStringLiteral("pointXYButton"));
-        pointXYButton->setGeometry(QRect(410, 300, 91, 31));
+        pointXYButton->setGeometry(QRect(450, 210, 91, 31));
         openImgButton = new QPushButton(centralWidget);
         openImgButton->setObjectName(QStringLiteral("openImgButton"));
-        openImgButton->setGeometry(QRect(570, 300, 91, 31));
+        openImgButton->setGeometry(QRect(640, 210, 91, 31));
+        label = new QLabel(centralWidget);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(0, 250, 901, 231));
+        saveButton = new QPushButton(centralWidget);
+        saveButton->setObjectName(QStringLiteral("saveButton"));
+        saveButton->setGeometry(QRect(790, 210, 91, 31));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 860, 22));
+        menuBar->setGeometry(QRect(0, 0, 899, 22));
         MainWindow->setMenuBar(menuBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
@@ -73,6 +82,8 @@ public:
         clearButton->setText(QApplication::translate("MainWindow", "Clear", Q_NULLPTR));
         pointXYButton->setText(QApplication::translate("MainWindow", "PointXY", Q_NULLPTR));
         openImgButton->setText(QApplication::translate("MainWindow", "OpenImg", Q_NULLPTR));
+        label->setText(QString());
+        saveButton->setText(QApplication::translate("MainWindow", "Save", Q_NULLPTR));
     } // retranslateUi
 
 };
