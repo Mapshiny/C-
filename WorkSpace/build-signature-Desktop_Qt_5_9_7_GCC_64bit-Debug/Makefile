@@ -1067,6 +1067,8 @@ mainwindow.o: ../signature/mainwindow.cpp ../signature/mainwindow.h \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qstyle.h \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qtabbar.h \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qrubberband.h \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/QLabel \
+		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qlabel.h \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/QMenuBar \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qmenubar.h \
 		/opt/Qt5.9.7/5.9.7/gcc_64/include/QtWidgets/qmenu.h \

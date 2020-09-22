@@ -29,8 +29,7 @@ private slots:
     void on_expimgButton_clicked();
     void on_pointXYButton_clicked();
     void on_openImgButton_clicked();
-
-    void on_saveButton_clicked();
+    void on_matrixButton_clicked();
 
 private:
 	QPoint point;
