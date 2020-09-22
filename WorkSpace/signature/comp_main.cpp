@@ -3,8 +3,7 @@
 
 int compress_main(char* ifilename, char* ofilename)
 {
-    FILE *ifp,*ofp,*ffp;
-    char choic;
+    FILE *ifp,*ofp;
 
     /*
     ------------------------------
@@ -16,9 +15,6 @@ int compress_main(char* ifilename, char* ofilename)
     --------------------------------
     */
 
-    choic = 'a';
-    if(choic=='a')
-    {
     	/*
        -----------------------
        printf("请输入压缩(Compress)源文件名:");
@@ -39,10 +35,10 @@ int compress_main(char* ifilename, char* ofilename)
            return -1;
        }
        compress(ifp,ofp);
-       qDebug() << "文件" << ifilename << "成功压缩为文件" << ofilename;
+       qDebug() << ifilename << "压缩为" << ofilename;
        fclose(ifp);
        fclose(ofp);
-    }
+/*----------------------------------------------------------------------
     //解压缩
     else
     {
@@ -67,12 +63,33 @@ int compress_main(char* ifilename, char* ofilename)
        fclose(ofp);
        fclose(ffp);
     }
+-----------------------------------------------------------------------*/
     return 0;
 }
 
-int decompress_main()
+int decompress_main(char* ifilename, char* ofilename)
 {
+    FILE *ofp,*ffp;
+	/*
+	printf("请输入解压缩(Decompress)源文件名:");
+    scanf("%s",ifilename);
+    printf("请输入解压缩(Decompress)输出文件名:");
+    scanf("%s",ofilename);*/
+	if((ofp=fopen(ifilename,"rb"))==nullptr)
+    {
+		qDebug() << "无法打开文件!";
+        return -1;
+    }
+    if((ffp=fopen(ofilename,"wb"))==nullptr)
+    {
+        qDebug() << "无法创建文件!";
+        return -1;
+    }
 
+   	decompress(ofp,ffp);
+   	qDebug() << ifilename << "解压缩为" << ofilename;
+   	fclose(ofp);
+   	fclose(ffp);
 }
 
 

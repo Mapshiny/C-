@@ -5,7 +5,7 @@
 #include <QPainter>
 #include <QSize>
 #include <QTime>  
-
+#include <QFileDialog>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -14,10 +14,10 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    resize(900, 500);    //窗口大小设置为600*500
+    resize(900, 500);    //窗口大小设置为900*500
     pix = QPixmap(900,200);
     pix.fill(Qt::white);
-    press = false;
+    //press = false;
     /*
 	button = new QPushButton(this);
 	button->setText(tr("Clear"));
@@ -117,61 +117,109 @@ void MainWindow::on_clearButton_clicked()
 
 void MainWindow::on_expimgButton_clicked()
 {
-    qDebug() << "width:" << pix.width() << " height:" << pix.height();
+	qDebug() << "width:" << pix.width() << " height:" << pix.height();
 
 	QPixmap pixmap = QWidget::grab(
-        QRect(0, 0, pix.width(), pix.height())
-        );
-	qDebug() << pixmap;
-    render(&pixmap);
+	    QRect(0, 0, pix.width(), pix.height())
+	);
+	render(&pixmap);
+	
+	QString ImgPath = QFileDialog::getSaveFileName(this,tr("Save Image"),"../../",tr("Images (*.png *.bmp *.jpg)")); //选择路径
+	
+	ImgPath += ".bmp";
+	pixmap.save(ImgPath);
 
-    QDateTime current_date_time = QDateTime::currentDateTime();
-    QString current_date = current_date_time.toString("yyyy_MM_dd_hh_mm_ss_zzz");
-    QString ImgPath = "../../nonCompress/" + current_date + ".bmp";
-
-    pixmap.save(ImgPath);
-
-    //-------------------------图片压缩--------------------------------------- 
-    //-------------ifilename------------------------
-    char *ifilename = nullptr;
-    QByteArray ba = ImgPath.toLatin1();
-    ifilename = (char *)malloc(ba.length() + 1);
-    memset(ifilename, 0, ba.length());
-    memcpy(ifilename, ba.data(), ba.length());
-    ifilename[ba.length()] = '\0';
-    qDebug()<< "ifilename" << ifilename;
-    //-------------ofilename-------------------------------------
-    char *ofilename;
-    QString OutputImg = "../../Compress/Output" + current_date;
-    ba = OutputImg.toLatin1();
-    ofilename = (char *)malloc(ba.length() + 1);
+	//-------------------------图片压缩--------------------------------------- 
+	//-------------ifilename------------------------
+	//warning: .length() int 隐式转换为 size_t
+	char *ifilename = nullptr;
+	QByteArray ba = ImgPath.toLatin1();
+	ifilename = (char *)malloc(ba.length() + 1);
+	memset(ifilename, 0, ba.length());
+	memcpy(ifilename, ba.data(), ba.length());
+	ifilename[ba.length()] = '\0';
+	qDebug()<< "ifilename" << ifilename;
+	//-------------ofilename-------------------------------------
+	char *ofilename;
+	QString current_date = QDateTime::currentDateTime().toString("yyyy_MM_dd_hh_mm_ss");
+	QString OutputImg = "../../Compress/Output" + current_date;
+	ba = OutputImg.toLatin1();
+	ofilename = (char *)malloc(ba.length() + 1);
 	memset(ofilename, 0, ba.length());
-    memcpy(ofilename, ba.data(), ba.length());
-    ofilename[ba.length()] = '\0';
-    qDebug()<< "ofilename" << ofilename;
-    /*
-    char a[60] = "../../ExportPic/test_out_put"; 
-    ofilename = a;
-    */
-    compress_main(ifilename, ofilename);
+	memcpy(ofilename, ba.data(), ba.length());
+	ofilename[ba.length()] = '\0';
+
 	/*
-    qDebug() << "export Image";
+	char a[60] = "../../ExportPic/test_out_put"; 
+	ofilename = a;
+	*/
+	compress_main(ifilename, ofilename);
+	/*
+	qDebug() << "export Image";
 
-    QPixmap pixmap(this->size());
-    render(&pixmap);
-    pixmap.save(QCoreApplication::applicationDirPath() + "/1.jpg");
-*/
+	QPixmap pixmap(this->size());
+	render(&pixmap);
+	pixmap.save(QCoreApplication::applicationDirPath() + "/1.jpg");
+	*/
 
 
-    /*
-    //QPixmap pixmap = QPixmap::grabWidget(this);
-    //QPixmap pixmap = QPixmap::grabWidget(this);
-    QPixmap pixmap = QWidget::grab();
-    QSize picSize(28, 28);
-    QPixmap ret = pixmap.scaled(picSize);
-    ret.save("..\\..\\ExportPic\\num.png");
+	/*
+	//QPixmap pixmap = QPixmap::grabWidget(this);
+	//QPixmap pixmap = QPixmap::grabWidget(this);
+	QPixmap pixmap = QWidget::grab();
+	QSize picSize(28, 28);
+	QPixmap ret = pixmap.scaled(picSize);
+	ret.save("..\\..\\ExportPic\\num.png");
 
-    */
+	*/
+}
+
+void MainWindow::on_openImgButton_clicked()
+{
+    qDebug() << "show picture!";
+    QString OpenFile;
+    QImage image;
+    //打开文件夹中的图片文件
+    OpenFile = QFileDialog::getOpenFileName(this, "选择已压缩图片", "../../", "All(*)");
+    if( OpenFile != "" )
+    {
+    	qDebug() << "OpenFile:" << OpenFile;
+
+    	char *ifilename = nullptr;
+		QByteArray ba = OpenFile.toLatin1();
+		ifilename = (char *)malloc(ba.length() + 1);
+		memset(ifilename, 0, ba.length());
+		memcpy(ifilename, ba.data(), ba.length());
+		ifilename[ba.length()] = '\0';
+
+
+    	QString current_date = QDateTime::currentDateTime().toString("yyyy_MM_dd_hh_mm_ss");
+    	
+		char *ofilename;
+		QString OutputImg = "../../nonCompress/DecompressImg" + current_date;
+		ba = OutputImg.toLatin1();
+		ofilename = (char *)malloc(ba.length() + 1);
+		memset(ofilename, 0, ba.length());
+		memcpy(ofilename, ba.data(), ba.length());
+		ofilename[ba.length()] = '\0';
+
+        decompress_main(ifilename, ofilename);
+		
+		if( image.load(OutputImg) )
+        {
+            //ui->label->setPixmap(QPixmap::fromImage(image));
+            ui->label->setPixmap(QPixmap::fromImage(image.scaled(ui->label->size())));
+        }
+        
+    }
+
+}
+
+void MainWindow::on_saveButton_clicked()
+{
+	qDebug() << "save image!";
+    QString filename1 = QFileDialog::getSaveFileName(this,tr("Save Image"),"../../",tr("Images (*.png *.bmp *.jpg)")); //选择路径
+    qDebug() << "filename1:" << filename1;
 }
 
 void MainWindow::on_pointXYButton_clicked()
@@ -192,11 +240,4 @@ void MainWindow::on_pointXYButton_clicked()
 		i++;
 	}
     */
-}
-
-
-
-void MainWindow::on_openImgButton_clicked()
-{
-     qDebug() << "show picture!";
 }
