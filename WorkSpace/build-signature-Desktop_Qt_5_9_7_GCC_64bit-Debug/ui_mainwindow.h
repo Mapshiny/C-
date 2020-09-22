@@ -32,7 +32,7 @@ public:
     QPushButton *pointXYButton;
     QPushButton *openImgButton;
     QLabel *label;
-    QPushButton *saveButton;
+    QPushButton *matrixButton;
     QMenuBar *menuBar;
     QStatusBar *statusBar;
 
@@ -40,7 +40,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(899, 532);
+        MainWindow->resize(1237, 573);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         expimgButton = new QPushButton(centralWidget);
@@ -58,13 +58,13 @@ public:
         label = new QLabel(centralWidget);
         label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(0, 250, 901, 231));
-        saveButton = new QPushButton(centralWidget);
-        saveButton->setObjectName(QStringLiteral("saveButton"));
-        saveButton->setGeometry(QRect(790, 210, 91, 31));
+        matrixButton = new QPushButton(centralWidget);
+        matrixButton->setObjectName(QStringLiteral("matrixButton"));
+        matrixButton->setGeometry(QRect(790, 210, 91, 31));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 899, 22));
+        menuBar->setGeometry(QRect(0, 0, 1237, 22));
         MainWindow->setMenuBar(menuBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
@@ -83,7 +83,7 @@ public:
         pointXYButton->setText(QApplication::translate("MainWindow", "PointXY", Q_NULLPTR));
         openImgButton->setText(QApplication::translate("MainWindow", "OpenImg", Q_NULLPTR));
         label->setText(QString());
-        saveButton->setText(QApplication::translate("MainWindow", "Save", Q_NULLPTR));
+        matrixButton->setText(QApplication::translate("MainWindow", "Matrix", Q_NULLPTR));
     } // retranslateUi
 
 };

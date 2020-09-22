@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    //default: 900x500
     resize(900, 500);    //窗口大小设置为900*500
     pix = QPixmap(900,200);
     pix.fill(Qt::white);
@@ -215,13 +215,6 @@ void MainWindow::on_openImgButton_clicked()
 
 }
 
-void MainWindow::on_saveButton_clicked()
-{
-	qDebug() << "save image!";
-    QString filename1 = QFileDialog::getSaveFileName(this,tr("Save Image"),"../../",tr("Images (*.png *.bmp *.jpg)")); //选择路径
-    qDebug() << "filename1:" << filename1;
-}
-
 void MainWindow::on_pointXYButton_clicked()
 {
     int i = 0;
@@ -239,5 +232,65 @@ void MainWindow::on_pointXYButton_clicked()
 		painter.drawPoint(point_list.at(i));
 		i++;
 	}
+    */
+}
+
+void MainWindow::on_matrixButton_clicked()
+{
+	/*
+    int row = 900;
+    int col = 200;
+    QVector<QVector<int>> qv1(row);
+    for(int i = 2;i < row;i++)
+    {
+        qv1[i].resize(col);
+    }
+	*/
+    QVector<QVector<int>> array;
+	QVector<int> temparray;
+    int m = 200;
+    int n = 900;
+    int i, j, k;
+    for(i = 0; i < m; ++i)// m*n 维数组
+	{				
+		for(j = 0; j < n; ++j)
+			temparray.push_back(0);
+		array.push_back(temparray);
+        temparray.erase(temparray.begin(), temparray.end());
+	}
+	i = 0;
+	while(i < point_list.size())
+	{
+		j = point_list[i].x();
+		k = point_list[i].y();
+		array[k][j] = 1;
+        i++;
+	}
+	qDebug() << "point_list.size()" << point_list.size();
+	/*
+	int tmp = 100;
+	QString str = QString::number(tmp);
+	*/
+	/*
+	--------------------------------------------------------------
+	QString str[200];
+	//打印二维素组
+	for(i=0; i<m ; ++i)
+	{
+        for(j=0; j<n; ++j)
+		{
+            str[i] += QString::number(array[i][j]);
+		}
+        qDebug() << str[i] << endl;
+        str[i] += '\n';
+        ui->textEdit->append(str[i]);
+	}
+	--------------------------------------------------------------------------
+	*/
+
+    /*
+    qDebug() << "save image!";
+    QString filename1 = QFileDialog::getSaveFileName(this,tr("Save Image"),"../../",tr("Images (*.png *.bmp *.jpg)")); //选择路径
+    qDebug() << "filename1:" << filename1;
     */
 }

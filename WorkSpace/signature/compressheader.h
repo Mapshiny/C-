@@ -28,4 +28,11 @@ void decode(FILE *,char *,int);//解码，逆运算
 DWORD getBMPsize(FILE *ifp);//获取位图大小
 int IsFeasible(char *,char *,int);//判断压缩可行性，可行
 
+
+
+
+
+
+//void StringConvert();
+
 #endif

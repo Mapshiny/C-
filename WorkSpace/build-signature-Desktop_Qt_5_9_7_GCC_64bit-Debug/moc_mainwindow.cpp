@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
     QByteArrayData data[7];
-    char stringdata0[131];
+    char stringdata0[133];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,13 +37,14 @@ QT_MOC_LITERAL(2, 34, 0), // ""
 QT_MOC_LITERAL(3, 35, 23), // "on_expimgButton_clicked"
 QT_MOC_LITERAL(4, 59, 24), // "on_pointXYButton_clicked"
 QT_MOC_LITERAL(5, 84, 24), // "on_openImgButton_clicked"
-QT_MOC_LITERAL(6, 109, 21) // "on_saveButton_clicked"
+QT_MOC_LITERAL(6, 109, 23) // "on_matrixButton_clicked"
 
     },
     "MainWindow\0on_clearButton_clicked\0\0"
     "on_expimgButton_clicked\0"
     "on_pointXYButton_clicked\0"
-    "on_openImgButton_clicked\0on_saveButton_clicked"
+    "on_openImgButton_clicked\0"
+    "on_matrixButton_clicked"
 };
 #undef QT_MOC_LITERAL
 
@@ -87,7 +88,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 1: _t->on_expimgButton_clicked(); break;
         case 2: _t->on_pointXYButton_clicked(); break;
         case 3: _t->on_openImgButton_clicked(); break;
-        case 4: _t->on_saveButton_clicked(); break;
+        case 4: _t->on_matrixButton_clicked(); break;
         default: ;
         }
     }

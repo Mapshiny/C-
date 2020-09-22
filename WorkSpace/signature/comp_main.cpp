@@ -120,7 +120,7 @@ void compress(FILE *ifp,FILE *ofp)
         wbuffer(ifp,buffer,MaxSize);
         output=RLE(ofp,buffer,MaxSize,output);
     }
-    qDebug() << "Compressing Rate= " << output*100.0/input ;
+    qDebug() << "Compressing Rate= " << (output*100.0/input);
     //printf("%d",sizeof(OutUnit));
 }
 
@@ -284,6 +284,8 @@ void rbuffer(FILE *ofp,char *buffer,int size)
        temp=0;
     }
 }
+
+
 
 /*void bufdisplay(char *s,char *buffer,int size)
 {
